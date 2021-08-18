@@ -31,8 +31,7 @@ model = Doc2Vec(vector_size=vec_size,
 
 model.build_vocab(tagged_data)
 
-for epoch in enumerate(tqdm(range(max_epochs))):
-    # print('iteration {0}'.format(epoch))
+for i, epoch in enumerate(tqdm(range(max_epochs))):
     model.train(tagged_data,
                 total_examples=model.corpus_count,
                 epochs=model.epochs)
@@ -40,6 +39,9 @@ for epoch in enumerate(tqdm(range(max_epochs))):
     model.alpha -= 0.0002
     # fix the learning rate, no decay
     model.min_alpha = model.alpha
+    if (i % 5 == 0):
+        model.save("model/d2v.model")
+
 
 model.save("model/d2v.model")
 print("Model Saved")
