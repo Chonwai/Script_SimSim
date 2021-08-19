@@ -10,7 +10,7 @@ import nltk
 from tqdm import tqdm
 import json
 
-f = open('data/test.json', 'r')
+f = open('data/train_content.json', 'r', encoding='utf-8')
 
 data = json.load(f)
 
