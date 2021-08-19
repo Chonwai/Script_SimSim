@@ -49,7 +49,8 @@ model.train(tagged_data,
                 total_examples=model.corpus_count,
                 start_alpha=0.002,
                 end_alpha=-0.016,
-                epochs=model.epochs)
+                epochs=model.epochs,
+                workers=6)
 
 model.save("model/d2v.model")
 print("Model Saved")
