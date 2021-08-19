@@ -5,10 +5,9 @@ import numpy as np
 import jieba
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from jieba import analyse
-from nltk.tokenize import word_tokenize
-import nltk
 from tqdm import tqdm
 import json
+import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_path', default='data/train_content.json', type=str, required=False, help='Please enter a path of data.')
