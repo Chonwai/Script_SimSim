@@ -11,7 +11,7 @@ parser.add_argument('--data_path', default='data/train_content.json', type=str, 
 
 args = parser.parse_args()
 
-f = open(args.data_path, 'r')
+f = open(args.data_path, 'r', encoding='utf-8')
 
 data = json.load(f)
 

@@ -10,7 +10,12 @@ import nltk
 from tqdm import tqdm
 import json
 
-f = open('data/train_content.json', 'r', encoding='utf-8')
+parser = argparse.ArgumentParser()
+parser.add_argument('--data_path', default='data/train_content.json', type=str, required=False, help='Please enter a path of data.')
+
+args = parser.parse_args()
+
+f = open(args.data_path, 'r', encoding='utf-8')
 
 data = json.load(f)
 
