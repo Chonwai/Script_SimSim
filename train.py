@@ -8,6 +8,8 @@ from jieba import analyse
 from tqdm import tqdm
 import json
 import argparse
+import re
+import pandas as pd
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_path', default='data/train_content.json',
@@ -16,11 +18,27 @@ parser.add_argument('--data_path', default='data/train_content.json',
 args = parser.parse_args()
 
 f = open(args.data_path, 'r', encoding='utf-8')
-
 data = json.load(f)
 
-tagged_data = [TaggedDocument(words=list(jieba.lcut(_d)), tags=[
-                              str(i)]) for i, _d in enumerate(tqdm(data))]
+stop_words = pd.read_csv("./data/stopwords.txt", index_col=False, quoting=3,
+                         names=['stopword'],
+                         sep="\n",
+                         encoding='utf-8')
+stop_words = list(stop_words.stopword)
+
+tagged_data = []
+
+for id, sentence in enumerate(tqdm(data)):
+    sentence = re.sub('[0-9]', '', sentence)
+    sentence = re.sub('[a-zA-Z]', '', sentence)
+    sentence = re.sub("[，、\:：“”‘’'|!！「」（）丨。？/*-+]", '', sentence)
+    sentence = re.sub('\s', '', sentence)
+    word_list = list(jieba.lcut(sentence))
+    segments = []
+    for word in word_list:
+        if word not in stop_words:
+            segments.append(word)
+    tagged_data.append(TaggedDocument(words=segments, tags=[id]))
 
 print("Finished the Tagged Data!")
 
