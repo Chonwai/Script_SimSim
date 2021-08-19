@@ -10,7 +10,8 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_path', default='data/train_content.json', type=str, required=False, help='Please enter a path of data.')
+parser.add_argument('--data_path', default='data/train_content.json',
+                    type=str, required=False, help='Please enter a path of data.')
 
 args = parser.parse_args()
 
@@ -29,28 +30,20 @@ alpha = 0.025
 
 model = Doc2Vec(tagged_data,
                 vector_size=vec_size,
-                window = 5,
+                window=5,
                 alpha=alpha,
                 min_alpha=0.001,
                 min_count=1,
-                dm=1)
+                dm=1,
+                workers=6)
 
 model.build_vocab(tagged_data)
 
-# for i, epoch in enumerate(tqdm(range(max_epochs))):
-#     # decrease the learning rate
-#     model.alpha -= 0.0002
-#     # fix the learning rate, no decay
-#     model.min_alpha = model.alpha
-#     if (i % 5 == 0):
-#         model.save("model/d2v.model")
-
 model.train(tagged_data,
-                total_examples=model.corpus_count,
-                start_alpha=0.002,
-                end_alpha=-0.016,
-                epochs=model.epochs,
-                workers=6)
+            total_examples=model.corpus_count,
+            start_alpha=0.002,
+            end_alpha=-0.016,
+            epochs=model.epochs)
 
 model.save("model/d2v.model")
 print("Model Saved")
