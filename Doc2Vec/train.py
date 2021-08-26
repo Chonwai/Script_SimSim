@@ -12,7 +12,7 @@ import re
 import pandas as pd
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_path', default='data/train_content.json',
+parser.add_argument('--data_path', default='../data/train_content.json',
                     type=str, required=False, help='Please enter a path of data.')
 
 args = parser.parse_args()
@@ -20,7 +20,7 @@ args = parser.parse_args()
 f = open(args.data_path, 'r', encoding='utf-8')
 data = json.load(f)
 
-stop_words = pd.read_csv("./data/stopwords.txt", index_col=False, quoting=3,
+stop_words = pd.read_csv("../data/stopwords.txt", index_col=False, quoting=3,
                          names=['stopword'],
                          sep="\n",
                          encoding='utf-8')
@@ -63,5 +63,5 @@ model.train(tagged_data,
             end_alpha=-0.016,
             epochs=model.epochs)
 
-model.save("model/d2v.model")
+model.save("../model/d2v.model")
 print("Model Saved")
