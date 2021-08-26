@@ -12,9 +12,6 @@ args = parser.parse_args()
 
 model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
 
-#Start the multi-process pool on all available CUDA devices
-pool = model.start_multi_process_pool()
-
 f = open(args.data_path, 'r', encoding='utf-8')
 sentences = json.load(f)
 
@@ -29,13 +26,8 @@ sentences = json.load(f)
 #              '海鷗男士手錶，時尚的外觀結構，充分體現你的典雅風格，鏡面硬度高，耐磨性很好，讓你帶上經典不乏時尚美感。']
 
 #Compute embeddings
-# embeddings = model.encode(sentences, convert_to_tensor=True)
-#Compute the embeddings using the multi-process pool
-embeddings = model.encode_multi_process(sentences, pool, convert_to_tensor=True)
+embeddings = model.encode(sentences, convert_to_tensor=True)
 
 #Store sentences & embeddings on disc
 with open('../embeddings/embeddings.pkl', "wb") as fOut:
     pickle.dump({'sentences': sentences, 'embeddings': embeddings}, fOut, protocol=pickle.HIGHEST_PROTOCOL)
-
-#Optional: Stop the proccesses in the pool
-model.stop_multi_process_pool(pool)
