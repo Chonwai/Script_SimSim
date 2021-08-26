@@ -26,7 +26,7 @@ sentences = json.load(f)
 #              '海鷗男士手錶，時尚的外觀結構，充分體現你的典雅風格，鏡面硬度高，耐磨性很好，讓你帶上經典不乏時尚美感。']
 
 #Compute embeddings
-embeddings = model.encode(sentences, convert_to_tensor=True)
+embeddings = model.encode(sentences)
 
 #Store sentences & embeddings on disc
 with open('../embeddings/embeddings.pkl', "wb") as fOut:

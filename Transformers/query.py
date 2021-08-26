@@ -1,6 +1,9 @@
 from sentence_transformers import SentenceTransformer, util
+import torch
 import argparse
 import pickle
+
+print(torch.cuda.is_available())
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--sentence', default='我每天佩戴手錶坐巴士上學！',
@@ -16,7 +19,7 @@ model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
 
 #Load sentences & embeddings from disc
 with open('../embeddings/embeddings.pkl', "rb") as fIn:
-    stored_data = pickle.load(fIn)
+    stored_data = torch.load(fIn, map_location=torch.device('cpu'))
     stored_sentences = stored_data['sentences']
     stored_embeddings = stored_data['embeddings']
 
