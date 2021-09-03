@@ -16,7 +16,7 @@ query = [args.sentence]
 model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
 
 #Load sentences & embeddings from disc
-with open('../embeddings/embeddings.pkl', "rb") as fIn:
+with open(args.embedding_path, "rb") as fIn:
     stored_data = pickle.load(fIn)
     stored_sentences = stored_data['sentences']
     stored_embeddings = stored_data['embeddings']
