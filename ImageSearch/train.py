@@ -8,13 +8,11 @@ parser.add_argument('--data_path', default='../data/data_watch.json',
                     type=str, required=False, help='Please enter a path of data.')
 parser.add_argument('--save_embeddings_path', default='../embeddings/embeddings.pkl',
                     type=str, required=False, help='Please enter a path of saving embeddings result.')
-parser.add_argument('--model', default='distiluse-base-multilingual-cased-v2',
-                    type=str, required=False, help='Please enter a model.')
 
 
 args = parser.parse_args()
 
-model = SentenceTransformer(args.model)
+model = SentenceTransformer('clip-ViT-B-32-multilingual-v1')
 
 f = open(args.data_path, 'r', encoding='utf-8')
 sentences = json.load(f)
